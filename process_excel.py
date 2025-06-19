@@ -146,12 +146,17 @@ def process_excel(file_path):
         try:
             df = pd.read_excel(file_path, sheet_name=sheet, header=2)
             df.columns = df.columns.str.strip()
+            print(f"  Columns found: {list(df.columns)}")
+            print(f"  Total rows: {len(df)}")
         except Exception as e:
+            print(f"  Error reading sheet '{sheet}': {e}")
             continue
         resp_col = response_columns[sheet]
         if resp_col not in df.columns:
             print(f"WARNING: Response column '{resp_col}' not found in {sheet}")
             print(f"Available columns: {list(df.columns)}")
+            print(f"  Columns found: {list(df.columns)}")
+            print(f"  Total rows: {len(df)}")
             continue
         for idx, row in df.iterrows():
             indicator_raw = row.get('Indicator', '')
@@ -161,6 +166,7 @@ def process_excel(file_path):
             indicator = str(indicator_raw).strip() if not is_empty_or_nan(indicator_raw) else ''
             subindicator = str(subindicator_raw).strip() if not is_empty_or_nan(subindicator_raw) else ''
             qn_no = str(qn_no_raw).strip() if not is_empty_or_nan(qn_no_raw) else ''
+            
             if indicator.lower() == 'nan':
                 indicator = ''
             if subindicator.lower() == 'nan':
@@ -195,6 +201,7 @@ def process_excel(file_path):
                 'subindicator': subindicator,
                 'qn_no': qn_no,
                 'global_weight': weight          }
+            print(f"  Writing to Redis key: {redis_key}")
             if resp_val_rounded is not None:
                 redis_data['response_value'] = resp_val_rounded
             if cumulative_value is not None:
