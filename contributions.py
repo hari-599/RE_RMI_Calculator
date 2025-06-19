@@ -6,7 +6,7 @@ from extensions import redis_client
 def save_or_update_electricity_data(form_data):
     generation = int(form_data['generation'])
     consumption = int(form_data['consumption'])
-    percentage = (consumption / generation) * 100 if consumption else 0.0
+    percentage = (generation / consumption)  if consumption else 0.0
 
     # Use a Redis hash per user
     redis_key = f"electricity_data:user:{current_user.id}"

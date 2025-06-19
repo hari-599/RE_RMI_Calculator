@@ -107,7 +107,7 @@
                     <canvas id="reRmiDonut" width="220" height="220"></canvas>
                 </div>
                 <div class="metric-display">
-                    RE-RMI Value: <span class="metric-value" id="reRmiValue">{{ re_rmi_value if re_rmi_value is not none else '--' }}</span>
+                    RE-RMI Value: <span class="metric-value" id="reRmiValue">{{ re_rmi_value }}</span>
                 </div>
             </div>
             <div class="graph-panel sub-graphs-panel">
@@ -116,21 +116,21 @@
                     <canvas id="govDonut" width="60" height="60"></canvas>
                     <div class="sub-metric-info">
                         <div class="sub-metric-title">Governance Maturity Index</div>
-                        <div class="sub-metric-value" style="color: #27ae60;" id="govValue">{{ governance_maturity_index if governance_maturity_index is not none else '--' }}%</div>
+                        <div class="sub-metric-value" style="color: #27ae60;" id="govValue">{{ governance_maturity_index }}%</div>
                     </div>
                 </div>
                 <div class="sub-metric">
                     <canvas id="marketDonut" width="60" height="60"></canvas>
                     <div class="sub-metric-info">
                         <div class="sub-metric-title">Market Maturity Index</div>
-                        <div class="sub-metric-value" style="color: #e67e22;" id="marketValue">{{ market_maturity_index if market_maturity_index is not none else '--' }}%</div>
+                        <div class="sub-metric-value" style="color: #e67e22;" id="marketValue">{{ market_maturity_index }}%</div>
                     </div>
                 </div>
                 <div class="sub-metric">
                     <canvas id="consumerDonut" width="60" height="60"></canvas>
                     <div class="sub-metric-info">
                         <div class="sub-metric-title">Consumer Maturity Index</div>
-                        <div class="sub-metric-value" style="color: #2980b9;" id="consumerValue">{{ consumer_maturity_index if consumer_maturity_index is not none else '--' }}%</div>
+                        <div class="sub-metric-value" style="color: #2980b9;" id="consumerValue">{{ consumer_maturity_index }}%</div>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -182,7 +182,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -201,7 +201,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -224,7 +224,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -247,7 +247,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -266,7 +266,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -285,7 +285,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -304,7 +304,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -323,7 +323,7 @@
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
+                        <td>{{ '%.2f' % row.response_value if row.response_value is not none else '' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
