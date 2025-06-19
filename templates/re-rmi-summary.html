@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Governance - RE-RMI calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/logo.png" alt="CalcToolPro">
+            RE-RMI Calculator
+        </div>
+        <div class="header-buttons">
+            <a href="{{ url_for('app_routes.dashboard', username=slugify(current_user.fullname)) }}" class="home-btn">Home</a>
+            <a href="{{ url_for('app_routes.login') }}" class="signup-btn">Sign Out</a>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="main-content" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <div class="graph-panels-container" style="display: flex; flex-direction: row; justify-content: center; align-items: flex-start; gap: 40px; width: 100%;">
+            <!-- Left: RE-RMI Summary Donut Chart -->
+            <div class="panel" style="min-width: 340px; max-width: 400px; width: 400px; height: 420px; flex: none; display: flex; flex-direction: column; align-items: center;">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #222; margin-bottom: 18px; text-align: center; letter-spacing: 0.5px;">RE-RMI Summary</h2>
+                <div style="width: 220px; height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;">
+                    <canvas id="reRmiDonut" width="200" height="200"></canvas>
+                </div>
+                <div style="text-align: center; font-size: 1.2rem; font-weight: bold; margin-top: -10px;">
+                    RE-RMI Value: <span id="reRmiValue">{{ re_rmi_value if re_rmi_value is not none else '--' }}</span>
+                </div>
+            </div>
+            <!-- Right: Maturity Indexes -->
+            <div class="panel" style="width: 400px; min-width: 320px; max-width: 400px; height: 420px; flex: none; display: flex; flex-direction: column; align-items: center; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.10); padding: 28px 32px 18px 32px; margin-top: 0;">
+                <div style="display: flex; flex-direction: column; gap: 60px; width: 100%; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 18px; width: 100%;">
+                        <canvas id="govDonut" width="70" height="70"></canvas>
+                        <div style="font-size: 1.1rem; font-weight: 600;">
+                            Governance Maturity Index<br>
+                            <span style="font-size:1.3em; color:#27ae60;" id="govValue">{{ governance_maturity_index if governance_maturity_index is not none else '--' }}%</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 18px; width: 100%;">
+                        <canvas id="marketDonut" width="70" height="70"></canvas>
+                        <div style="font-size: 1.1rem; font-weight: 600;">
+                            Market Maturity Index<br>
+                            <span style="font-size:1.3em; color:#e67e22;" id="marketValue">{{ market_maturity_index if market_maturity_index is not none else '--' }}%</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 18px; width: 100%;">
+                        <canvas id="consumerDonut" width="70" height="70"></canvas>
+                        <div style="font-size: 1.1rem; font-weight: 600;">
+                            Consumer Maturity Index<br>
+                            <span style="font-size:1.3em; color:#2980b9;" id="consumerValue">{{ consumer_maturity_index if consumer_maturity_index is not none else '--' }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- General Recommendations Section -->
+        {% if general_recommendations and general_recommendations|length > 0 %}
+        <div class="recommendations-section" style="margin: 40px auto 0 auto; max-width: 900px; width: 100%; background: #fff; border-radius: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); padding: 32px 28px;">
+            <h2 style="font-size: 1.6rem; font-weight: 700; color: #256029; margin-bottom: 18px; text-align: center; letter-spacing: 0.5px;">General Recommendations</h2>
+            <ol style="font-size: 1.08rem; color: #333; line-height: 1.7; padding-left: 22px;">
+                {% for rec in general_recommendations %}
+                <li style="margin-bottom: 12px;">
+                    {{ rec.recommendation }}
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
+        <!-- Download Report Button -->
+        <div style="width:100%; display:flex; justify-content:center; margin-top: 30px;">
+            <a href="{{ url_for('app_routes.generate_report', username=slugify(current_user.fullname)) }}"
+               class="calculate-btn"
+               style="max-width:320px; width:100%; text-align:center; font-size:1.1rem; text-decoration: none;"
+               target="_blank">
+                Generate RE-RMI Report 
+            </a>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var reRmiValue = parseFloat('{{ re_rmi_value if re_rmi_value is not none else 0 }}');
+            var govValue = parseFloat('{{ governance_maturity_index if governance_maturity_index is not none else 0 }}');
+            var marketValue = parseFloat('{{ market_maturity_index if market_maturity_index is not none else 0 }}');
+            var consumerValue = parseFloat('{{ consumer_maturity_index if consumer_maturity_index is not none else 0 }}');
+            drawDonut('reRmiDonut', reRmiValue, 100, '#388E3C'); // Set max to 100
+            drawDonut('govDonut', govValue, 100, '#727b1e');
+            drawDonut('marketDonut', marketValue, 100, '#e67e22');
+            drawDonut('consumerDonut', consumerValue, 100, '#2980b9');
+        });
+        function drawDonut(canvasId, value, max, color) {
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [value || 0, Math.max(0, max - (value || 0))],
+                        backgroundColor: [color, '#f3f4f6'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: { legend: { display: false } },
+                    responsive: false
+                }
+            });
+        }
+    </script>
+</body>
+</html>

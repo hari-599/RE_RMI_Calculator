@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Overview - RE-RMI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/logo.png" alt="CalcToolPro">
+            RE-RMI Calculator
+        </div>
+        <div class="header-buttons">
+            <a href="{{ url_for('app_routes.dashboard', username=slugify(current_user.fullname)) }}" class="home-btn">Home</a>
+            <a href="{{ url_for('app_routes.logout') }}" class="signup-btn">Sign Out</a>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="container" style="display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px;">
+            <div class="panel" style="width: 600px; max-width: 98vw; margin: 0 auto;">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #222; margin-bottom: 18px; text-align: center; letter-spacing: 0.5px;">Regional Overview</h2>
+                <div style="margin-bottom: 18px; color: var(--text-medium); text-align: center; font-size: 1.1rem;">
+                    Welcome, {{ user.fullname }}!
+                </div>
+                <form method="post" style="margin-bottom: 24px;">
+                    <div class="form-group">
+                        <label class="form-label">State</label>
+                        <input class="form-input" type="text" name="state" required value="{{ request.form.state or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">District</label>
+                        <input class="form-input" type="text" name="district" required value="{{ request.form.district or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Board Circle</label>
+                        <input class="form-input" type="text" name="board_circle" required value="{{ request.form.board_circle or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Division</label>
+                        <input class="form-input" type="text" name="division" required value="{{ request.form.division or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Section Office</label>
+                        <input class="form-input" type="text" name="section_office" required value="{{ request.form.section_office or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">No. of Domestic Consumers</label>
+                        <input class="form-input" type="number" name="domestic_consumers" required value="{{ request.form.domestic_consumers or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">No. of Live Renewable Energy Prosumers</label>
+                        <input class="form-input" type="number" name="renewable_prosumers" required value="{{ request.form.renewable_prosumers or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Annual Electricity Generation from Renewable Sources (kWh)</label>
+                        <input class="form-input" type="number" name="generation" required value="{{ request.form.generation or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Annual Electricity Consumption (kWh)</label>
+                        <input class="form-input" type="number" name="consumption" required value="{{ request.form.consumption or '' }}">
+                    </div>
+                    <button type="submit" class="calculate-btn">Calculate Contribution</button>
+                </form>
+                {% if percentage_contribution is defined %}
+                <div class="success-message" style="display:block; margin-top:10px;">
+                    Percentage Contribution: <b>{{ percentage_contribution }}%</b>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>

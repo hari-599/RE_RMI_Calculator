@@ -1,0 +1,882 @@
+/* General Reset */
+:root {
+    --primary-green: #4CAF50; /* A fresh green */
+    --primary-green-dark: #388E3C; /* Darker green for hover/active */
+    --accent-blue: #2196F3;    /* A clear blue for secondary elements */
+    --accent-blue-dark: #1976D2;
+    --background-light: #f8f8f8;
+    --text-dark: #333;
+    --text-medium: #666;
+    --hero-gradient-start: #6dd5ed; /* Lighter blue */
+    --hero-gradient-end: #2193b0;   /* Deeper teal */
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    background-color: #f5f5f5;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.logo img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+.logo:hover {
+    opacity: 0.85; /* Slightly fade */
+    transform: translateX(3px); /* Nudge it slightly right */
+}
+
+.header-buttons, .nav {
+    display: flex;
+    gap: 15px;
+}
+
+.nav {
+    gap: 30px;
+}
+
+.nav a, .footer a {
+    text-decoration: none;
+    color: #666;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav a:hover, .footer a:hover {
+    color: #333;
+}
+
+.home-btn, .signin-btn, .signup-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.home-btn {
+    background-color: transparent;
+    color: #666;
+    border: 1px solid #ccc;
+}
+
+.home-btn:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.signin-btn, .signup-btn {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.signin-btn:hover, .signup-btn:hover {
+    background-color: var(--primary-green);
+}
+
+.sign-up-btn {
+    background-color: var(--primary-green);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.sign-up-btn:hover {
+    background-color: var(--primary-green);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 60vh;
+}
+
+/* Signup and Signin Containers */
+.signup-container, .signin-container {
+    background-color: white;
+    padding: 50px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+.signup-title, .signin-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    display: block;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #6b8db5;
+    box-shadow: 0 0 0 3px rgba(107, 141, 181, 0.3);
+}
+
+.password-requirements {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+.password-requirements.valid {
+    color: #28a745;
+}
+
+.password-requirements.invalid {
+    color: #dc3545;
+}
+
+.create-account-btn, .login-btn ,.signout-btn{
+    width: 100%;
+    background-color: var(--primary-green);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.create-account-btn:hover, .login-btn:hover, .signout-btn:hover {
+    background-color: var(--primary-green);
+}
+
+.create-account-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+    color: #999;
+    font-size: 14px;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+.divider span {
+    background-color: white;
+    padding: 0 20px;
+}
+
+.signin-link, .signup-link {
+    width: 100%;
+    background-color: transparent;
+    color:var(--primary-green);
+    padding: 15px;
+    border: 2px solid var(--text-dark);
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.signin-link:hover, .signup-link:hover {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+.success-message {
+    color: green;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.form-input.error {
+    border-color: #dc3545;
+}
+
+/* Forgot password link */
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    color: #6b8db5;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 40px 0;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.footer-links {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Hero Wrapper - Centers the hero container */
+.hero-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px; /* Reduced top/bottom padding */
+    width: 100%;
+    min-height: 400px; /* Reduced height */
+    margin-top: -40px; /* Reduce gap from header */
+}
+
+/* Hero Section (index.html) - Custom Montserrat Centered Version */
+.hero {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    background: linear-gradient(135deg, #2193b0 0%, #4CAF50 100%); /* Blue to green gradient */
+    border-radius: 20px;
+    padding: 40px 60px;
+    color: white;
+    width: 100%;
+    max-width: 1200px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hero-content-align {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+    justify-content: center;
+    gap: 20px;
+    z-index: 2;
+    position: relative;
+    width: 100%;
+}
+
+.hero-header {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    margin: 0;
+    line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out;
+    white-space: nowrap;
+    text-align: left; /* Align text to the left */
+}
+
+.hero-sub {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1.3rem;
+    margin: 0;
+    opacity: 0.95;
+    line-height: 1.4;
+    animation: fadeInUp 1s ease-out 0.2s both;
+    text-align: left; /* Align text to the left */
+}
+
+/* Get Started Button with gradient text */
+.get-started-btn {
+    margin-top: 25px;
+    background: white;
+    padding: 16px 32px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    border: none;
+}
+
+.get-started-btn::before {
+    content: attr(data-text);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #2193b0 0%, #4CAF50 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: fadeInGradient 1s ease-out forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeInGradient {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.get-started-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(33, 147, 176, 0.2);
+}
+
+.get-started-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(33, 147, 176, 0.15);
+}
+
+/* --- Calculator Icon Theming (Renewable Energy) --- */
+
+/* The overall calculator container (the dark body) */
+.calculator {
+    width: 160px;
+    height: 220px;
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.calculator:hover {
+    transform: translateY(-8px) rotateY(5deg);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+/* Calculator Screen - Solar Panel Look */
+.calc-screen {
+    background-color: #555; /* Darker screen, like a panel */
+    background-image: linear-gradient(to right, #444, #555, #444); /* Subtle gradient for panel feel */
+    height: 40px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #777; /* Frame the screen */
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.5); /* Inner shadow for screen depth */
+    position: relative; /* Essential for pseudo-elements */
+    overflow: hidden; /* Ensures lines and glare don't spill out */
+}
+
+/* Solar Panel Lines on the Screen */
+.calc-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom, /* Creates horizontal lines */
+        rgba(255,255,255,0.15), /* Line color (subtle white/gray) */
+        rgba(255,255,255,0.15) 2px, /* Line thickness */
+        transparent 2px,
+        transparent 10px /* Space between lines */
+    );
+    z-index: 1; /* Make sure lines are on top of the screen background */
+}
+
+/* Subtle Glare/Highlight on the Screen (mimics sun reflection) */
+.calc-screen::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 30%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.2) 0%, /* Start with some opacity */
+        transparent 50% /* Fade to transparent */
+    );
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0; /* Creates a subtle rounded shape for glare */
+    transform: rotate(5deg); /* Slight rotation for a dynamic look */
+    opacity: 0.7; /* Control visibility */
+    z-index: 2; /* Ensure glare is on top of lines */
+}
+
+/* Mini Solar Panel on Top of the Calculator Body */
+.calculator::before { /* Using ::before on .calculator itself */
+    content: '';
+    position: absolute;
+    top: -15px; /* Position above the calculator body */
+    left: 50%;
+    transform: translateX(-50%); /* Center it horizontally */
+    width: 40px; /* Width of the mini panel */
+    height: 10px; /* Height of the mini panel */
+    background-color: #f7d73f; /* Bright yellow for sun */
+    border-radius: 3px;
+    border: 1px solid #c9a700; /* Darker border for definition */
+    z-index: 3; /* Ensure it's on top of the calculator body and screen */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow for depth */
+}
+
+/* The Calculator Buttons */
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    flex: 1;
+    background-color: #444; /* Darker background for buttons area */
+    border-radius: 8px; /* Slightly more rounded button area */
+    padding: 5px; /* Internal padding for buttons */
+}
+
+.calc-btn {
+    background-color: var(--primary-green); /* Use your primary green for buttons */
+    border-radius: 4px; /* Slightly less rounded buttons */
+    height: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle button shadow */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.calc-btn:hover {
+    background-color: var(--primary-green-dark);
+    transform: scale(1.05); /* Buttons pop slightly on hover */
+}
+
+.calc-btn:active {
+    transform: scale(0.95); /* Buttons shrink on click */
+    background-color: var(--primary-green-dark);
+}
+
+/* --- Dashboard Step Buttons and Panel Styles --- */
+.step-button {
+    margin: 10px;
+    width: 80%;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+.step-button:enabled {
+    background-color: var(--primary-green);
+    color: white;
+}
+.step-button:enabled:hover {
+    background-color: var(--primary-green-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+.step-button:disabled {
+    background: #f3f4f6 !important;
+    color: #bbb !important;
+    border: 2px solid #e0e0e0 !important;
+    cursor: not-allowed;
+}
+.step-button:not(:disabled) {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.step-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.upload-box {
+    border: 2px dashed #ccc;
+    padding: 30px 20px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #fafafa;
+    transition: all 0.3s;
+}
+.upload-box:hover {
+    border-color: var(--primary-green);
+    background-color: #f8f9fa;
+}
+.upload-box input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: white;
+}
+.calculate-btn {
+    width: 100%;
+    background-color: var(--primary-green);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.calculate-btn:hover {
+    background-color: var(--primary-green-dark);
+}
+.calculate-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.panel {
+    background-color: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+.panel h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    color: var(--text-dark);
+    font-weight: bold;
+    text-align: center;
+}
+.loading {
+    display: none;
+    color: #666;
+    font-style: italic;
+    margin-top: 10px;
+}
+.success-message {
+    display: none;
+    color: #4CAF50;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.step-button.completed {
+    background-color: var(--primary-green-dark);
+    color: white;
+}
+.step-button.completed:hover {
+    background-color: #256029;
+}
+/* About Tool Section */
+.about-tool {
+    max-width: 1200px;
+    margin: -20px auto; /* Reduced top/bottom margin */
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    padding: 30px 50px;
+    text-align: left;
+    position: relative;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.about-tool::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #4CAF50, #2196F3, #4CAF50);
+    border-radius: 20px 20px 0 0;
+}
+
+.about-tool h2 {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-align: left;
+    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.about-tool p {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 400;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.about-tool p:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 1024px) {
+    .hero-header {
+        font-size: 1.8rem;
+    }
+    
+    .hero {
+        padding: 30px 40px;
+    }
+    
+    .hero-wrapper {
+        padding: 10px 15px;
+        margin-top: -15px;
+    }
+    
+    .about-tool {
+        margin: 30px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 40px 20px;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 50px 30px;
+        gap: 30px;
+    }
+
+    .hero-content-align {
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-header {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .hero-sub {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .calculator {
+        width: 140px;
+        height: 200px;
+    }
+
+    .about-tool {
+        margin: 20px 15px;
+    }
+
+    .about-tool h2 {
+        font-size: 1.8rem;
+    }
+
+    .about-tool p {
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .footer-links {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 40px 20px;
+    }
+
+    .hero-header {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .hero-sub {
+        font-size: 1rem;
+    }
+
+    .get-started-btn {
+        padding: 14px 24px;
+        font-size: 1rem;
+    }
+
+    .about-tool h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* Copyright styling */
+.copyright {
+    text-align: center;
+    width: 100%;
+    padding: 30px 0;
+    color: #388E3C;
+    font-size: 1.05rem;
+    font-family: 'Montserrat', Arial, sans-serif;
+}

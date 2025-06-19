@@ -1,0 +1,15 @@
+Flask>=2.3
+Flask-WTF>=1.1.1
+Flask-Login>=0.6.3
+Flask-SQLAlchemy>=3.1.1
+email-validator>=2.1.0.post1
+WTForms>=3.1.2
+Werkzeug>=2.3.8
+Flask-Mail
+itsdangerous
+python-slugify
+pandas  
+redis
+pdfkit
+pytest
+dotenv

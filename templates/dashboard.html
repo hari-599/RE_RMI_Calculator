@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RE-RMI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/logo.png" alt="CalcToolPro">
+            RE-RMI Calculator
+        </div>
+        <div class="header-buttons">
+            <a href="{{ url_for('app_routes.dashboard', username=slugify(current_user.fullname)) }}" class="home-btn">Home</a>
+            <a href="{{ url_for('app_routes.logout') }}" class="signup-btn">Sign Out</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container" style="display: flex; justify-content: center; align-items: flex-start; gap: 40px; flex-wrap: wrap; padding: 10px 20px;">
+            <!-- Left: Excel Upload -->
+            <div class="panel" style="min-width: 320px; max-width: 350px; flex: 1;">
+                <h2>Upload Excel File</h2>
+                <form id="excel-upload-form" action="{{ url_for('app_routes.dashboard', username=slugify(current_user.fullname)) }}" method="post" enctype="multipart/form-data">
+                    <div class="upload-box">
+                        <div style="margin-bottom: 15px; color: var(--text-medium); font-size: 14px;">
+                            📄 Select your Excel file
+                        </div>
+                        <input type="file" name="excel_file" accept=".xlsx,.xls" required>
+                        <p style="margin-top: 15px; color: var(--text-medium); font-size: 12px;">
+                            Supported formats: .xlsx, .xls
+                        </p>
+                    </div>
+                    
+                    <div class="loading" id="upload-loading" style="display: none;">
+                        Processing file...
+                    </div>
+                    
+                    <div class="success-message" id="upload-success" style="display: none;">
+                        ✅ File uploaded successfully! You can now proceed with the next steps.
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn" id="upload-btn" style="margin-top: 20px;">
+                        Upload & Process
+                    </button>
+                    <div style="margin-top: 18px; text-align: center;">
+                        <span style="color: #666; font-size: 14px;">Need a template? </span>
+                        <a href="{{ url_for('static', filename='RE-RMI Survey Excel Sheet.xlsx') }}" target="_blank" style="color: var(--accent-blue); text-decoration: underline; font-size: 14px;">Download here</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right: 5 Sequential Buttons -->
+            <div class="panel" style="width: 700px; min-width: 400px; max-width: 900px; flex: none; display: flex; flex-direction: column; align-items: center; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.10); padding: 28px 32px 18px 32px; margin-top: 0;">
+
+                <div id="step-buttons" style="width: 100%; display: flex; flex-direction: column; gap: 16px; align-items: center;">
+                    <div style="display: flex; flex-direction: row; gap: 18px; width: 100%; justify-content: center;">
+                        <a href="{{ url_for('app_routes.regional_overview',username=slugify(current_user.fullname)) }}">
+                            <button id="btn1" class="step-button" disabled style="flex:1; font-size:1.1rem; padding: 18px 0; background: #f3f4f6; color: #bbb; border-radius: 14px; border: 2px solid #e0e0e0; font-weight: 600; letter-spacing: 0.2px; min-width: 120px; max-width: 180px;">
+                                <span style="font-size:1.3em; vertical-align:middle;">🔍</span> <span style="display:block; font-size:0.98em;">Regional Overview</span>
+                            </button>
+                        </a>
+                        <a href="{{ url_for('app_routes.regional_governance',username=slugify(current_user.fullname)) }}">
+                            <button id="btn2" class="step-button" disabled style="flex:1; font-size:1.1rem; padding: 18px 0; background: #f3f4f6; color: #bbb; border-radius: 14px; border: 2px solid #e0e0e0; font-weight: 600; letter-spacing: 0.2px; min-width: 120px; max-width: 180px;">
+                                <span style="font-size:1.3em; vertical-align:middle;">📄</span> <span style="display:block; font-size:0.98em;">Regional Governance</span>
+                            </button>
+                        </a>
+                        <a href="{{ url_for('app_routes.regional_market',username=slugify(current_user.fullname)) }}">
+                            <button id="btn3" class="step-button" disabled style="flex:1; font-size:1.1rem; padding: 18px 0; background: #f3f4f6; color: #bbb; border-radius: 14px; border: 2px solid #e0e0e0; font-weight: 600; letter-spacing: 0.2px; min-width: 120px; max-width: 180px;">
+                                <span style="font-size:1.3em; vertical-align:middle;">📄</span> <span style="display:block; font-size:0.98em;">Regional Market</span>
+                            </button>
+                        </a>
+                    </div>
+                    <div style="display: flex; flex-direction: row; gap: 18px; width: 66%; justify-content: center;">
+                        <a href="{{ url_for('app_routes.consumer_perception',username=slugify(current_user.fullname)) }}">
+                            <button id="btn4" class="step-button" disabled style="flex:1; font-size:1.1rem; padding: 18px 0; background: #f3f4f6; color: #bbb; border-radius: 14px; border: 2px solid #e0e0e0; font-weight: 600; letter-spacing: 0.2px; min-width: 120px; max-width: 180px;">
+                                <span style="font-size:1.3em; vertical-align:middle;">📄</span> <span style="display:block; font-size:0.98em;">Consumer Perception</span>
+                            </button>
+                        </a>
+                        <a href="{{ url_for('app_routes.summary',username=slugify(current_user.fullname)) }}">
+                            <button id="btn5" class="step-button" disabled style="flex:1; font-size:1.1rem; padding: 18px 0; background: #f3f4f6; color: #bbb; border-radius: 14px; border: 2px solid #e0e0e0; font-weight: 600; letter-spacing: 0.2px; min-width: 120px; max-width: 180px;">
+                                <span style="font-size:1.3em; vertical-align:middle;">📊</span> <span style="display:block; font-size:0.98em;">RE-RMI Summary</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div style="margin-top: 24px; padding: 10px; background: #f8f9fa; border-radius: 10px; width: 100%; font-size: 1rem; color: #666;">
+                    <div style="font-weight: bold; color: #333; font-size: 1.1rem; margin-bottom: 6px;">Instructions</div>
+                    <ol style="margin:0; padding-left: 18px;">
+                        <li>Upload your Survey responses in the given template</li>
+                        <li>Mandatory requirement of minimum 384 household samples for a region</li>
+                        <li>Complete Regional Overview to calculate RE-RMI Summary</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let isFileUploaded = false;
+        let isPercentageCalculated = false;
+        // Set from backend
+        let contributionCalculated = false;
+        try {
+            contributionCalculated = JSON.parse('{{ contribution_calculated | default(false) | tojson | safe }}');
+        } catch (e) {
+            contributionCalculated = false;
+        }
+        if (contributionCalculated) {
+            isPercentageCalculated = true;
+            sessionStorage.setItem('percentage_contribution', 'true');
+        }
+        
+        // Lock all buttons at the beginning
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById('btn' + i);
+                if (btn) {
+                    btn.disabled = true;
+                    btn.style.background = '#f3f4f6';
+                    btn.style.color = '#bbb';
+                    btn.style.border = '2px solid #e0e0e0';
+                }
+            }
+            if (sessionStorage.getItem('fileUploaded') === 'true') {
+                isFileUploaded = true;
+                unlockInitialButtons();
+                // Optionally clear the flag so it doesn't persist forever
+                // sessionStorage.removeItem('fileUploaded');
+            }
+            if (sessionStorage.getItem('percentage_contribution') === 'true' || isPercentageCalculated) {
+                isPercentageCalculated = true;
+                unlockFinalButton();
+            }
+        });
+
+        // Handle form submission - FIXED VERSION
+        document.getElementById('excel-upload-form').addEventListener('submit', function(e) {
+            const fileInput = document.querySelector('input[type="file"]');
+            const uploadBtn = document.getElementById('upload-btn');
+            const loading = document.getElementById('upload-loading');
+            const successMsg = document.getElementById('upload-success');
+            if (!fileInput.files.length) {
+                e.preventDefault();
+                alert('Please select a file first!');
+                return;
+            }
+            // Lock all buttons before uploading
+            for (let i = 1; i <= 5; i++) {
+                const btn = document.getElementById('btn' + i);
+                btn.disabled = true;
+                btn.style.background = '#f3f4f6';
+                btn.style.color = '#bbb';
+                btn.style.border = '2px solid #e0e0e0';
+            }
+            // Show loading state
+            uploadBtn.disabled = true;
+            uploadBtn.textContent = 'Processing...';
+            loading.style.display = 'block';
+            successMsg.style.display = 'none';
+            // Wait for form to submit and page to reload, then unlock buttons in DOMContentLoaded
+            // Set a flag in sessionStorage so unlockInitialButtons runs after reload
+            sessionStorage.setItem('fileUploaded', 'true');
+            sessionStorage.removeItem('percentage_contribution');
+        });
+
+        function unlockInitialButtons() {
+            // Unlock first 4 buttons when file is uploaded
+            for (let i = 1; i <= 4; i++) {
+                const btn = document.getElementById('btn' + i);
+                if (btn) {
+                    btn.disabled = false;
+                    btn.style.background = '#4CAF50';
+                    btn.style.color = '#fff';
+                    btn.style.border = '2px solid #45a049';
+                }
+            }
+        }
+
+        function unlockFinalButton() {
+            // Unlock the 5th button when percentage contribution is calculated
+            const btn5 = document.getElementById('btn5');
+            if (btn5) {
+                btn5.disabled = false;
+                btn5.style.background = '#4CAF50';
+                btn5.style.color = '#fff';
+                btn5.style.border = '2px solid #45a049';
+            }
+        }
+
+        // Handle button clicks with proper validation
+        document.getElementById('btn1').addEventListener('click', function(e) {
+            if (!isFileUploaded && !contributionCalculated) {
+                e.preventDefault();
+                alert('Please upload a file first!');
+                return false;
+            }
+        });
+
+        document.getElementById('btn2').addEventListener('click', function(e) {
+            if (!isFileUploaded && !contributionCalculated) {
+                e.preventDefault();
+                alert('Please upload a file first!');
+                return false;
+            }
+        });
+
+        document.getElementById('btn3').addEventListener('click', function(e) {
+            if (!isFileUploaded && !contributionCalculated) {
+                e.preventDefault();
+                alert('Please upload a file first!');
+                return false;
+            }
+        });
+
+        document.getElementById('btn4').addEventListener('click', function(e) {
+            if (!isFileUploaded && !contributionCalculated) {
+                e.preventDefault();
+                alert('Please upload a file first!');
+                return false;
+            }
+        });
+
+        document.getElementById('btn5').addEventListener('click', function(e) {
+            if (!isFileUploaded && !contributionCalculated) {
+                e.preventDefault();
+                alert('Please upload a file first!');
+                return false;
+            }
+            if (!isPercentageCalculated) {
+                e.preventDefault();
+                alert('Please complete Regional Overview first to calculate percentage contribution!');
+                return false;
+            }
+        });
+
+        // Clear session storage when logging out
+        document.querySelectorAll('.signup-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                sessionStorage.clear();
+            });
+        });
+
+        // Add CSS for button states
+        const style = document.createElement('style');
+        style.textContent = `
+            .step-button:disabled {
+                background: #f3f4f6 !important;
+                color: #bbb !important;
+                border: 2px solid #e0e0e0 !important;
+                cursor: not-allowed;
+            }
+            
+            .step-button:not(:disabled) {
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            
+            .step-button:not(:disabled):hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            }
+            
+            .loading {
+                display: none;
+                color: #666;
+                font-style: italic;
+                margin-top: 10px;
+            }
+            
+            .success-message {
+                display: none;
+                color: #4CAF50;
+                font-weight: bold;
+                margin-top: 10px;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

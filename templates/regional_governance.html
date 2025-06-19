@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Governance - RE-RMI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/logo.png" alt="CalcToolPro">
+            RE-RMI Calculator
+        </div>
+        <div class="header-buttons">
+            <a href="{{ url_for('app_routes.dashboard', username=slugify(current_user.fullname)) }}" class="home-btn">Home</a>
+            <a href="{{ url_for('app_routes.logout') }}" class="signup-btn">Sign Out</a>
+        </div>
+    </header>
+    <main class="main-content">
+        <div class="container" style="display: flex; justify-content: center; align-items: flex-start; padding: 20px 20px;">
+            <div class="panel" style="width: 1200px; max-width: 98vw; margin: 0 auto;">
+                <h2 style="font-size: 2rem; font-weight: 700; color: #222; margin-bottom: 18px; text-align: center; letter-spacing: 0.5px;">Regional Governance</h2>
+                <div style="margin-bottom: 24px;">
+                    <h3 style="color:green; margin-bottom:8px;">Support Policies and Schemes</h3>
+                    <table style="width:100%; border-collapse: collapse; margin-bottom: 18px;">
+                        <thead>
+                            <tr style="background:#f3f4f6;">
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Indicator</th>
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Sub-Indicator</th>
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Response Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in governance_data if row.qn_no.startswith('G.Q') and 1 <= (row.qn_no[3:]|int) <= 7 %}
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.indicator }}</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.subindicator }}</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.response_value }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% if governance_data|length == 0 %}
+                        <tr><td colspan="3" style="text-align:center; color:#888;">No data available.</td></tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div style="margin-bottom: 24px;">
+                    <h3 style="color:green; margin-bottom:8px;">Institutional Aspects</h3>
+                    <table style="width:100%; border-collapse: collapse; margin-bottom: 18px;">
+                        <thead>
+                            <tr style="background:#f3f4f6;">
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Indicator</th>
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Sub-Indicator</th>
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Response Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in governance_data if row.qn_no.startswith('G.Q') and 8 <= (row.qn_no[3:]|int) <= 22 %}
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.indicator }}</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.subindicator }}</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.response_value }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% if governance_data|length == 0 %}
+                        <tr><td colspan="3" style="text-align:center; color:#888;">No data available.</td></tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3 style="color:green; margin-bottom:8px;">Financial Support Systems</h3>
+                    <table style="width:100%; border-collapse: collapse; margin-bottom: 18px;">
+                        <thead>
+                            <tr style="background:#f3f4f6;">
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Indicator</th>
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Sub-Indicator</th>
+                                <th style="text-align:left; padding:8px; border-bottom:2px solid #e0e0e0;">Response Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in governance_data if row.qn_no.startswith('G.Q') and (row.qn_no[3:]|int) >= 23 %}
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.indicator }}</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.subindicator }}</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.response_value }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% if governance_data|length == 0 %}
+                        <tr><td colspan="3" style="text-align:center; color:#888;">No data available.</td></tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

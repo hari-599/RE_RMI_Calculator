@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - RE-RMI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <img src="/static/logo.png" alt="CalcToolPro">
+            RE-RMI Calculator
+        </div>
+        <div class="header-buttons">
+            <a href="/" class="home-btn">Home</a>
+            <a href="/login" class="signin-btn">Sign In</a>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="signup-container">
+            <h1 class="signup-title">Create Account</h1>
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'success' %}
+                        <div style="color: green; text-align: center; margin-bottom: 20px;">
+                            {{ message }}
+                        </div>
+                    {% else %}
+                        <div style="color: red; text-align: center; margin-bottom: 20px;">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!-- Flask-WTF Signup Form -->
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    <label class="form-label">{{ form.fullname.label }}</label>
+                    {{ form.fullname(class="form-input") }}
+                    {% if form.fullname.errors %}
+                        <div class="error-message">{{ form.fullname.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ form.email.label }}</label>
+                    {{ form.email(class="form-input", id="email") }}
+                    {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ form.password.label }}</label>
+                    {{ form.password(class="form-input", id="password") }}
+                    <div class="password-requirements" id="password-requirements">
+                        Password must be at least 8 characters long
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="error-message">{{ form.password.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">{{ form.confirm_password.label }}</label>
+                    {{ form.confirm_password(class="form-input", id="confirm-password") }}
+                    {% if form.confirm_password.errors %}
+                        <div class="error-message">{{ form.confirm_password.errors[0] }}</div>
+                    {% endif %}
+                </div>
+
+                {{ form.submit(class="create-account-btn") }}
+            </form>
+
+            <a href="/login" class="signin-link">Already have an account? Sign In</a>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const fullnameInput = document.getElementById('fullname');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const createAccountBtn = document.getElementById('createAccountBtn');
+        const passwordRequirements = document.getElementById('password-requirements');
+
+        // Clear error messages
+        function clearError(fieldId) {
+            const errorElement = document.getElementById(fieldId + '-error');
+            const inputElement = document.getElementById(fieldId);
+            errorElement.textContent = '';
+            inputElement.classList.remove('error');
+        }
+
+        // Show error messages
+        function showError(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + '-error');
+            const inputElement = document.getElementById(fieldId);
+            errorElement.textContent = message;
+            inputElement.classList.add('error');
+        }
+
+        // Validate password requirements
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+
+        // Real-time password validation
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            const isValid = validatePassword(password);
+
+            if (password.length > 0) {
+                if (isValid) {
+                    passwordRequirements.classList.remove('invalid');
+                    passwordRequirements.classList.add('valid');
+                    passwordRequirements.textContent = '✓ Password meets requirements';
+                } else {
+                    passwordRequirements.classList.remove('valid');
+                    passwordRequirements.classList.add('invalid');
+                    passwordRequirements.textContent = '✗ Password must be at least 8 characters long';
+                }
+            } else {
+                passwordRequirements.classList.remove('valid', 'invalid');
+                passwordRequirements.textContent = 'Password must be at least 8 characters long';
+            }
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Clear all previous errors
+            clearError('fullname');
+            clearError('email');
+            clearError('password');
+            clearError('confirm-password');
+
+            let isValid = true;
+
+            // Validate full name
+            if (fullnameInput.value.trim().length < 2) {
+                showError('fullname', 'Full name must be at least 2 characters long');
+                isValid = false;
+            }
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                showError('email', 'Please enter a valid email address');
+                isValid = false;
+            }
+
+            // Validate password
+            if (!validatePassword(passwordInput.value)) {
+                showError('password', 'Password must be at least 8 characters long');
+                isValid = false;
+            }
+
+            // Validate password confirmation
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                showError('confirm-password', 'Passwords do not match');
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Here you would typically send the data to your server
+                alert('Account created successfully! (This is a demo)');
+                // window.location.href = '/login';
+            }
+        });
+
+        // Clear errors on input focus
+        [fullnameInput, emailInput, passwordInput, confirmPasswordInput].forEach(input => {
+            input.addEventListener('focus', function() {
+                clearError(this.id);
+            });
+        });
+    </script>
+</body>
+</html>

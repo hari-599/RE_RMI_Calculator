@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RE-RMI PDF Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm 15mm 20mm 15mm;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #fff;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .header { background: linear-gradient(135deg, #38a169 0%, #256029 100%); color: white; padding: 20px 0; text-align: center; margin-bottom: 30px; border-radius: 8px; }
+        .logo { font-size: 28px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        .logo img { width: 40px; height: 40px; border-radius: 50%; }
+        .main-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        h1 { color: #38a169; font-size: 32px; text-align: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 3px solid #e0e6ed; page-break-after: avoid; }
+        h2 { color: #38a169; font-size: 24px; margin: 30px 0 20px 0; padding: 15px 20px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-left: 5px solid #38a169; border-radius: 5px; page-break-after: avoid; }
+        h3 { color: #256029; font-size: 18px; margin: 25px 0 15px 0; padding: 12px 15px; background: #f7fafc; border-left: 3px solid #a0e7b2; border-radius: 3px; page-break-after: avoid; }
+        .section-title { font-size: 20px; font-weight: bold; color: #256029; margin: 25px 0 15px 0; padding: 12px 0; border-bottom: 2px solid #e2e8f0; }
+        .panel { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); page-break-inside: avoid; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); page-break-inside: auto; }
+        th { background: linear-gradient(135deg, #38a169 0%, #256029 100%); color: white; padding: 15px 12px; text-align: left; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        tr:hover { background-color: #e6f9ed; }
+        tr { page-break-inside: avoid; page-break-after: auto; }
+        .calculate-btn { display: inline-block; background: linear-gradient(135deg, #38a169 0%, #256029 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 16px; text-align: center; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3); }
+        .calculate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(56, 161, 105, 0.4); }
+        .download-container { text-align: center; margin-bottom: 30px; padding: 20px; background: #f7fafc; border-radius: 12px; border: 2px dashed #a0e7b2; }
+        .graph-panels-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 30px; margin: 40px 0; padding: 20px; background: #f8fafc; border-radius: 12px; }
+        .graph-panel { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; min-width: 320px; max-width: 400px; flex: 1; }
+        .main-graph-panel { width: 100%; max-width: 450px; text-align: center; }
+        .sub-graphs-panel { width: 100%; max-width: 400px; }
+        .graph-title { font-size: 20px; font-weight: bold; color: #256029; text-align: center; margin-bottom: 20px; }
+        .chart-container { display: flex; justify-content: center; margin-bottom: 20px; }
+        .metric-display { text-align: center; font-size: 18px; font-weight: bold; color: #256029; margin-top: 15px; }
+        .metric-value { font-size: 24px; color: #38a169; margin-left: 8px; }
+        .sub-metric { display: flex; align-items: center; gap: 18px; padding: 15px 0; border-bottom: 1px solid #f1f5f9; }
+        .sub-metric:last-child { border-bottom: none; }
+        .sub-metric-info { flex: 1; }
+        .sub-metric-title { font-size: 14px; font-weight: 600; color: #256029; margin-bottom: 5px; }
+        .sub-metric-value { font-size: 18px; font-weight: bold; }
+        .recommendations-section { background: linear-gradient(135deg, #e6f9ed 0%, #fef5e7 100%); border: 1px solid #a0e7b2; border-radius: 12px; padding: 25px; margin: 25px 0; }
+        .recommendations-section h2 { color: #256029; background: none; border: none; margin-bottom: 20px; padding: 0; }
+        .recommendations-section ol { counter-reset: recommendation-counter; list-style: none; padding-left: 0; }
+        .recommendations-section li { counter-increment: recommendation-counter; margin-bottom: 15px; padding: 15px 20px; background: white; border-radius: 8px; border-left: 4px solid #38a169; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative; }
+        .recommendations-section li::before { content: counter(recommendation-counter); position: absolute; left: -15px; top: 15px; background: #38a169; color: white; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 12px; }
+        .no-data { text-align: center; color: #718096; font-style: italic; padding: 30px; background: #f7fafc; border-radius: 8px; }
+        @media print { .download-container { display: none; } .graph-panels-container { flex-direction: column; align-items: center; } .calculate-btn { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="/static/logo.png" alt="CalcToolPro">
+            RE-RMI Calculator
+        </div>
+    </div>
+    <div class="main-content">
+        <h1>RE-RMI Assessment Report</h1>
+        <!-- Download Button (for preview mode) -->
+        {% if preview_mode %}
+        <div class="download-container">
+            <a href="#" class="calculate-btn" onclick="window.print(); return false;">
+                📊 Download Complete PDF Report
+            </a>
+            <p style="margin-top: 10px; color: #256029;">Generate a comprehensive PDF version of this report</p>
+        </div>
+        {% endif %}
+        <!-- Regional Overview Section -->
+        <div class="panel">
+            <div class="section-title">📋 Regional Overview</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 70%;">Field</th>
+                        <th style="width: 30%;">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>State</td><td>{{ contributions.get('state', '') }}</td></tr>
+                    <tr><td>District</td><td>{{ contributions.get('district', '') }}</td></tr>
+                    <tr><td>State electricity board circle</td><td>{{ contributions.get('board_circle', '') }}</td></tr>
+                    <tr><td>State electricity board electrical division</td><td>{{ contributions.get('division', '') }}</td></tr>
+                    <tr><td>State electricity board section office</td><td>{{ contributions.get('section_office', '') }}</td></tr>
+                    <tr><td>Number of live domestic consumers</td><td>{{ contributions.get('domestic_consumers', '') }}</td></tr>
+                    <tr><td>Number of live renewable energy prosumers</td><td>{{ contributions.get('renewable_prosumers', '') }}</td></tr>
+                    <tr><td>Annual electricity generation from renewable sources(kWh)</td><td>{{ contributions.get('annual_generation', '') }}</td></tr>
+                    <tr><td>Annual electricity consumption(kWh)</td><td>{{ contributions.get('annual_consumption', '') }}</td></tr>
+                    <tr><td>Percentage contribution from RET's in total energy consumption.</td><td>{{ contributions.get('percentage_contribution', '') }}</td></tr>
+                    <tr><td>RE-RMI</td><td>{{ contributions.get('re_rmi_value', '') }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- RE-RMI Summary and Graphs Section -->
+        <div class="graph-panels-container">
+            <div class="graph-panel main-graph-panel">
+                <div class="graph-title">🎯 RE-RMI Summary</div>
+                <div class="chart-container">
+                    <canvas id="reRmiDonut" width="220" height="220"></canvas>
+                </div>
+                <div class="metric-display">
+                    RE-RMI Value: <span class="metric-value" id="reRmiValue">{{ re_rmi_value if re_rmi_value is not none else '--' }}</span>
+                </div>
+            </div>
+            <div class="graph-panel sub-graphs-panel">
+                <div class="graph-title">📊 Maturity Indices</div>
+                <div class="sub-metric">
+                    <canvas id="govDonut" width="60" height="60"></canvas>
+                    <div class="sub-metric-info">
+                        <div class="sub-metric-title">Governance Maturity Index</div>
+                        <div class="sub-metric-value" style="color: #27ae60;" id="govValue">{{ governance_maturity_index if governance_maturity_index is not none else '--' }}%</div>
+                    </div>
+                </div>
+                <div class="sub-metric">
+                    <canvas id="marketDonut" width="60" height="60"></canvas>
+                    <div class="sub-metric-info">
+                        <div class="sub-metric-title">Market Maturity Index</div>
+                        <div class="sub-metric-value" style="color: #e67e22;" id="marketValue">{{ market_maturity_index if market_maturity_index is not none else '--' }}%</div>
+                    </div>
+                </div>
+                <div class="sub-metric">
+                    <canvas id="consumerDonut" width="60" height="60"></canvas>
+                    <div class="sub-metric-info">
+                        <div class="sub-metric-title">Consumer Maturity Index</div>
+                        <div class="sub-metric-value" style="color: #2980b9;" id="consumerValue">{{ consumer_maturity_index if consumer_maturity_index is not none else '--' }}%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- General Recommendations Section -->
+        {% if general_recommendations and general_recommendations|length > 0 %}
+        <div class="recommendations-section">
+            <h2>💡 General Recommendations</h2>
+            <ol>
+                {% for rec in general_recommendations %}
+                <li>{{ rec.recommendation }}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endif %}
+        <!-- Regional Governance Section -->
+        <div class="panel">
+            <h2>🏛️ Regional Governance</h2>
+            <h3>Support Policies and Schemes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in governance_data|sort(attribute='qn_no') if row.qn_no.startswith('G.Q') and 1 <= (row.qn_no[3:]|int) <= 7 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Institutional Aspects</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in governance_data|sort(attribute='qn_no') if row.qn_no.startswith('G.Q') and 8 <= (row.qn_no[3:]|int) <= 22 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Financial Support Systems</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in governance_data|sort(attribute='qn_no') if row.qn_no.startswith('G.Q') and (row.qn_no[3:]|int) >= 23 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Regional Market Section -->
+        <div class="panel">
+            <h2>🏪 Regional Market</h2>
+            <h3>Supply and Marketing</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in market_data|sort(attribute='qn_no') %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Consumer Perception Section -->
+        <div class="panel">
+            <h2>👥 Consumer Perception</h2>
+            <h3>Energy Consumption Pattern</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 1 <= (row.qn_no[3:]|int) <= 6 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Consumer Perception: Social Aspects</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 16 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Consumer Perception: Economic Aspects</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 17 <= (row.qn_no[3:]|int) <= 21 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Consumer Perception: Environmental Aspects</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 22 <= (row.qn_no[3:]|int) <= 25 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Consumer Perception: Technological Aspects</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Indicator</th>
+                        <th style="width: 40%;">Sub-Indicator</th>
+                        <th style="width: 30%;">Response Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 26 %}
+                    <tr>
+                        <td>{{ row.indicator }}</td>
+                        <td>{{ row.subindicator }}</td>
+                        <td>{{ row.response_value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var reRmiValue = parseFloat('{{ re_rmi_value if re_rmi_value is not none else 0 }}');
+            var govValue = parseFloat('{{ governance_maturity_index if governance_maturity_index is not none else 0 }}');
+            var marketValue = parseFloat('{{ market_maturity_index if market_maturity_index is not none else 0 }}');
+            var consumerValue = parseFloat('{{ consumer_maturity_index if consumer_maturity_index is not none else 0 }}');
+            drawDonut('reRmiDonut', reRmiValue, 100, '#388E3C');
+            drawDonut('govDonut', govValue, 100, '#27ae60');
+            drawDonut('marketDonut', marketValue, 100, '#e67e22');
+            drawDonut('consumerDonut', consumerValue, 100, '#2980b9');
+        });
+        function drawDonut(canvasId, value, max, color) {
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    datasets: [{
+                        data: [value || 0, Math.max(0, max - (value || 0))],
+                        backgroundColor: [color, '#f1f5f9'],
+                        borderWidth: 0,
+                        cutout: '75%'
+                    }]
+                },
+                options: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    },
+                    elements: {
+                        arc: { borderWidth: 0 }
+                    }
+                },
+                plugins: [{
+                    beforeDraw: function(chart) {
+                        var width = chart.width,
+                            height = chart.height,
+                            ctx = chart.ctx;
+                        ctx.restore();
+                        var fontSize = (height / 6).toFixed(2);
+                        ctx.font = "bold " + fontSize + "px 'Segoe UI'";
+                        ctx.textBaseline = "middle";
+                        ctx.fillStyle = color;
+                        var text = Math.round(value || 0) + "%",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height / 2;
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                }]
+            });
+        }
+    </script>
+</body>
+</html>

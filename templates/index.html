@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RE-RMI Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="CalcToolPro">
+                RE-RMI Calculator
+            </div>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="#how-to">How to</a>
+                <a href="#faqs">FAQs</a>
+                <a href="#helpcenter">Help Center</a>
+            </nav>
+            <a href="/login" class="sign-up-btn">Sign in</a>
+        </header>
+
+        <!-- Hero Section -->
+        <div class="hero-wrapper">
+            <section class="hero">
+                <div class="hero-content-align">
+                    <span class="hero-header">RENEWABLE ENERGY-REGIONAL MATURITY INDEX (RE-RMI)</span>
+                    <span class="hero-sub">A Tool For Household Transition Assessment</span>
+                    <div style="width: 100%; display: flex; justify-content: center;">
+                        <a href="{{url_for('app_routes.signup')}}" class="get-started-btn" data-text="Get Started">Get Started</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- About the Tool Section -->
+        <section class="about-tool">
+            <h2>ABOUT THE TOOL</h2>
+            <p>The Renewable Energy – Regional Maturity Index (RE-RMI) is a strategic assessment tool designed to evaluate the progress of renewable energy transition within the domestic sector of a region. RE-RMI consolidates the governance, local market conditions and consumer perception in a region, and identify the critical indicators that would help in expedite household energy transition.</p>
+            
+            <p>This tool offers a clear snapshot of a region's current maturity level in terms of renewable energy transition, supporting evidence-based decision-making by local self-governments or Implementation agencies. RE-RMI helps uncover existing barriers, guiding stakeholders toward effective, targeted actions for accelerating the shift to a low-carbon future.</p>
+            
+            <p>Based on survey insights, the tool also generates recommendations tailored to regional contexts, incite authorities to implement context specific interventions and foster sustainable energy solutions at the grassroots level.</p>
+        </section>
+        <div class="copyright">
+            &copy; {{ 2025 }} RE-RMI CALCULATOR
+        </div>
+    </div>
+</body>
+</html>
