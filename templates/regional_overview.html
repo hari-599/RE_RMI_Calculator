@@ -66,7 +66,7 @@
                 </form>
                 {% if percentage_contribution is defined %}
                 <div class="success-message" style="display:block; margin-top:10px;">
-                    Percentage Contribution: <b>{{ percentage_contribution }}%</b>
+                    Percentage Contribution: <b>{{ '%.2f' % (percentage_contribution * 100) }}%</b>
                 </div>
                 {% endif %}
             </div>
