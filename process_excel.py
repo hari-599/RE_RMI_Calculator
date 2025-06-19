@@ -1,7 +1,7 @@
 import pandas as pd
-import redis
 from recommendations_data import RECOMMENDATIONS
 from extensions import redis_client
+import os
 global_weights = {
     'G.Q1': 0.01957749053,
     'G.Q2': 0.006231762569,
@@ -126,7 +126,7 @@ def is_empty_or_nan(value):
 
 def process_excel(file_path):
     print("process_excel calledhj!", flush=True)
-    print("HELLO", flush=True)
+    print(f"File exists: {os.path.exists(file_path)}, size: {os.path.getsize(file_path) if os.path.exists(file_path) else 'N/A'}")
 
     response_columns = {
         'GOVERNANCE': 'GOV_Response Value',

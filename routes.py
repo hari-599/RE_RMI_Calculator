@@ -9,12 +9,9 @@ from extensions import mail,redis_client
 import re
 from contributions import save_or_update_electricity_data, reset_electricity_data
 from process_excel import process_excel, is_empty_or_nan, get_20_min_response_recommendations
-import redis
-import tempfile
 import os
 from process_excel import clear_redis_data
 from flask import make_response
-import pdfkit
 
 
 def slugify(name):
@@ -129,10 +126,12 @@ def dashboard(username):
             print('File received:', file.filename)
             # Clear Redis before processing new file
             clear_redis_data(redis_client)
-            # Save uploaded file to a temporary location
-            with tempfile.NamedTemporaryFile(delete=False, suffix='.xlsx') as tmp:
-                file.save(tmp.name)
-                temp_path = tmp.name
+            # Save uploaded file to a known temp directory
+            UPLOAD_DIR = '/tmp'  # Use /tmp for cloud platforms like Render
+            os.makedirs(UPLOAD_DIR, exist_ok=True)
+            temp_path = os.path.join(UPLOAD_DIR, file.filename)
+            file.save(temp_path)
+            print(f"File saved at: {temp_path}, size: {os.path.getsize(temp_path)}")
             try:
                 print("About to call process_excel", flush=True)
                 process_excel(temp_path)
@@ -142,7 +141,8 @@ def dashboard(username):
                 session['file_uploaded'] = True
                 # flash('Excel file processed and data stored in Redis.', 'success')
             finally:
-                os.remove(temp_path)
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
         else:
             print('No file received in POST request.')
             flash('No file uploaded.', 'danger')
