@@ -6,8 +6,8 @@ from extensions import redis_client
 def save_or_update_electricity_data(form_data):
     generation = int(form_data['generation'])
     consumption = int(form_data['consumption'])
-    percentage = (generation / consumption)  if consumption else 0.0
-
+    percentage = (generation / consumption)*100  if consumption else 0.0
+    
     # Use a Redis hash per user
     redis_key = f"electricity_data:user:{current_user.id}"
     redis_client.hmset(redis_key, {
@@ -27,7 +27,7 @@ def save_or_update_electricity_data(form_data):
         sum_of_cum = float(redis_client.hget('summary_values', 'sum_of_cum') or 0.0)
     except Exception:
         sum_of_cum = 0.0
-    re_rmi_value = (sum_of_cum +(percentage*0.052791818))*100
+    re_rmi_value = (sum_of_cum +((percentage/100)*0.052791818))*100
     print(re_rmi_value,sum_of_cum, percentage)
     redis_client.hset(redis_key, 're_rmi_value', math.ceil(re_rmi_value))
     return round(percentage, 2)
