@@ -37,21 +37,21 @@
                     <div style="display: flex; align-items: center; gap: 18px; width: 100%;">
                         <canvas id="govDonut" width="70" height="70"></canvas>
                         <div style="font-size: 1.1rem; font-weight: 600;">
-                            Governance Maturity Index<br>
+                            Governance Maturity Value<br>
                             <span style="font-size:1.3em; color:#27ae60;" id="govValue">{{ governance_maturity_index if governance_maturity_index is not none else '--' }}%</span>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 18px; width: 100%;">
                         <canvas id="marketDonut" width="70" height="70"></canvas>
                         <div style="font-size: 1.1rem; font-weight: 600;">
-                            Market Maturity Index<br>
+                            Market Maturity Value<br>
                             <span style="font-size:1.3em; color:#e67e22;" id="marketValue">{{ market_maturity_index if market_maturity_index is not none else '--' }}%</span>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 18px; width: 100%;">
                         <canvas id="consumerDonut" width="70" height="70"></canvas>
                         <div style="font-size: 1.1rem; font-weight: 600;">
-                            Consumer Maturity Index<br>
+                            Consumer Maturity Value<br>
                             <span style="font-size:1.3em; color:#2980b9;" id="consumerValue">{{ consumer_maturity_index if consumer_maturity_index is not none else '--' }}%</span>
                         </div>
                     </div>
