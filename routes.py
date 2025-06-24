@@ -147,6 +147,7 @@ def dashboard(username):
             print('No file received in POST request.')
             flash('No file uploaded.', 'danger')
     print("HELLO FROM DASHBOARD POST")
+    contribution_calculated = redis_client.exists(redis_key)
     return render_template('dashboard.html', user=current_user, contribution_calculated=contribution_calculated)
 
 

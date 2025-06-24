@@ -1,4 +1,3 @@
-import redis
 from flask_login import current_user
 import math
 from extensions import redis_client
