@@ -35,6 +35,7 @@ app.config.update(
 mail.init_app(app)
 # Register routes from routes.py
 app.register_blueprint(app_routes)
-
+with app.app_context():
+    db.create_all()
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
