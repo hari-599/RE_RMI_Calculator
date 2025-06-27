@@ -345,7 +345,7 @@ def generate_report(username):
             governance_data.append({
                 'indicator': indicator,
                 'subindicator': subindicator,
-                'response_value': response_value,
+                'response_value': round(response_value,2),
                 'qn_no': qn_no
             })
     # Market data
@@ -361,7 +361,7 @@ def generate_report(username):
             market_data.append({
                 'indicator': indicator,
                 'subindicator': subindicator,
-                'response_value': response_value,
+                'response_value': round(response_value,2),
                 'qn_no': qn_no
             })
     # Perception data
@@ -379,7 +379,7 @@ def generate_report(username):
                 perception_data.append({
                     'indicator': indicator,
                     'subindicator': subindicator,
-                    'response_value': response_value,
+                    'response_value': round(response_value,2),
                     'qn_no': qn_no
                 })
     return render_template(
