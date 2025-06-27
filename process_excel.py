@@ -214,8 +214,14 @@ def process_excel(file_path):
                     market_cum_sum += cumulative_value
                     market_weight_sum += weight
                 elif qn_no.startswith('C.'):
-                    consumer_cum_sum += cumulative_value
-                    consumer_weight_sum += weight
+                    try:
+                        q_num=int(qn_no.split('Q')[1])
+                        if q_num>=7:
+                            consumer_cum_sum += cumulative_value
+                            consumer_weight_sum += weight
+                    except (IndexError, ValueError):
+                        pass
+                        
             try:
                 redis_client.hset(redis_key, mapping=redis_data)
                 print(f"  Successfully saved to Redis")
