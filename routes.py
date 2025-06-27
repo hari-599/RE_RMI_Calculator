@@ -342,10 +342,15 @@ def generate_report(username):
             indicator = row.get('indicator', '')
             subindicator = row.get('subindicator', '')
             response_value = row.get('response_value', '')
+            try:
+                rv = float(response_value)
+                rv = round(rv, 2)
+            except (TypeError, ValueError):
+                rv = response_value
             governance_data.append({
                 'indicator': indicator,
                 'subindicator': subindicator,
-                'response_value': round(response_value,2),
+                'response_value': rv,
                 'qn_no': qn_no
             })
     # Market data
@@ -358,10 +363,15 @@ def generate_report(username):
             indicator = row.get('indicator', '')
             subindicator = row.get('subindicator', '')
             response_value = row.get('response_value', '')
+            try:
+                rv = float(response_value)
+                rv = round(rv, 2)
+            except (TypeError, ValueError):
+                rv = response_value
             market_data.append({
                 'indicator': indicator,
                 'subindicator': subindicator,
-                'response_value': round(response_value,2),
+                'response_value': rv,
                 'qn_no': qn_no
             })
     # Perception data
@@ -376,10 +386,15 @@ def generate_report(username):
                 indicator = row.get('indicator', '')
                 subindicator = row.get('subindicator', '')
                 response_value = row.get('response_value', '')
+                try:
+                    rv = float(response_value)
+                    rv = round(rv, 2)
+                except (TypeError, ValueError):
+                    rv = response_value
                 perception_data.append({
                     'indicator': indicator,
                     'subindicator': subindicator,
-                    'response_value': round(response_value,2),
+                    'response_value': rv,
                     'qn_no': qn_no
                 })
     return render_template(
