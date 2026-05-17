@@ -12,7 +12,7 @@ pandas
 redis
 pdfkit
 pytest
-dotenv
+python-dotenv
 gunicorn
 openpyxl
 fakeredis

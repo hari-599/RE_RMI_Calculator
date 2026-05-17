@@ -1,5 +1,7 @@
-from app import db, app, User
 from sqlalchemy import inspect
+
+from app import app
+from re_rmi.models import db
 
 with app.app_context():
     db.create_all()

@@ -1,6 +1,7 @@
 from flask_login import current_user
 import math
-from extensions import redis_client
+
+from .extensions import redis_client
 
 def save_or_update_electricity_data(form_data):
     generation = int(form_data['generation'])

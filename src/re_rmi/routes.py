@@ -1,17 +1,17 @@
 from flask import Blueprint, render_template, redirect, request, url_for, flash, abort, session
 from flask_login import login_user, current_user,login_required,logout_user
 from flask_mail import Message
-from models import db, User
-from forms import LoginForm, SignupForm,ForgotPasswordForm, ResetPasswordForm
 from werkzeug.security import generate_password_hash, check_password_hash
-from utils import generate_reset_token, verify_reset_token
-from extensions import mail,redis_client
 import re
-from contributions import save_or_update_electricity_data, reset_electricity_data
-from process_excel import process_excel, is_empty_or_nan, get_20_min_response_recommendations
 import os
-from process_excel import clear_redis_data
-from flask import make_response
+
+from .contributions import save_or_update_electricity_data, reset_electricity_data
+from .extensions import mail,redis_client
+from .forms import LoginForm, SignupForm,ForgotPasswordForm, ResetPasswordForm
+from .models import db, User
+from .process_excel import clear_redis_data
+from .process_excel import process_excel, is_empty_or_nan, get_20_min_response_recommendations
+from .utils import generate_reset_token, verify_reset_token
 
 
 def slugify(name):

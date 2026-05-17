@@ -57,7 +57,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for row in perception_data if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 16 %}
+                        {% for row in perception_data if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 18 %}
                         <tr>
                             <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.indicator }}</td>
                             <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.subindicator }}</td>
@@ -78,7 +78,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for row in perception_data if row.qn_no.startswith('C.Q') and 17 <= (row.qn_no[3:]|int) <= 21 %}
+                        {% for row in perception_data if row.qn_no.startswith('C.Q') and 19 <= (row.qn_no[3:]|int) <= 23 %}
                         <tr>
                             <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.indicator }}</td>
                             <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.subindicator }}</td>
@@ -88,7 +88,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div style="margin-bottom: 24px;">
+                <!-- <div style="margin-bottom: 24px;">
                     <h3 style="color:green; margin-bottom:8px;">Consumer Perception: Environmental Aspects</h3>
                     <table style="width:100%; border-collapse: collapse; margin-bottom: 18px;">
                         <thead>
@@ -108,7 +108,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                </div>
+                </div> -->
                 <div>
                     <h3 style="color:green; margin-bottom:8px;">Consumer Perception: Technological Aspects</h3>
                     <table style="width:100%; border-collapse: collapse; margin-bottom: 18px;">
@@ -120,7 +120,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        {% for row in perception_data if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 26 %}
+                        {% for row in perception_data if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 29 %}
                         <tr>
                             <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.indicator }}</td>
                             <td style="padding:8px; border-bottom:1px solid #eee;">{{ row.subindicator }}</td>

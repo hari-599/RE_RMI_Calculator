@@ -22,3 +22,37 @@ A web-based decision support system designed to calculate the **Regional Maturit
 * **Data Processing:** Pandas (for weighted index calculations)
 * **Frontend:** HTML5, CSS3, Jinja2
 * **Deployment:** Docker, Render
+
+## Project Structure
+
+```text
+re-rmi/
+|-- app.py
+|-- requirements.txt
+|-- scripts/
+|   |-- create_db.py
+|   `-- extract_recommendations_to_py.py
+|-- src/
+|   `-- re_rmi/
+|       |-- __init__.py
+|       |-- routes.py
+|       |-- models.py
+|       |-- forms.py
+|       |-- extensions.py
+|       |-- process_excel.py
+|       |-- contributions.py
+|       |-- recommendations_data.py
+|       |-- static/
+|       `-- templates/
+`-- instance/
+```
+
+## Running Locally
+
+```powershell
+.\env\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+The root `app.py` file is intentionally kept as a lightweight entry point for local development and deployment platforms. The Flask application package now lives in `src/re_rmi`.

@@ -1,9 +1,12 @@
 import pandas as pd
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 # Path to your Excel file
-EXCEL_PATH = 'static/General recommendations.xlsx'
+EXCEL_PATH = PROJECT_ROOT / 'src' / 're_rmi' / 'static' / 'General recommendations.xlsx'
 # Output Python file
-OUTPUT_PATH = 'recommendations_data.py'
+OUTPUT_PATH = PROJECT_ROOT / 'src' / 're_rmi' / 'recommendations_data.py'
 
 # Read all sheets and collect recommendations
 xl = pd.ExcelFile(EXCEL_PATH)
