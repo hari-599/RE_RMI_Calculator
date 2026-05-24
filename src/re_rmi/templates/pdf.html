@@ -262,7 +262,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 16 %}
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 18 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -281,26 +281,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 17 <= (row.qn_no[3:]|int) <= 21 %}
-                    <tr>
-                        <td>{{ row.indicator }}</td>
-                        <td>{{ row.subindicator }}</td>
-                        <td>{{ row.response_value }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <h3>Consumer Perception: Environmental Aspects</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 30%;">Indicator</th>
-                        <th style="width: 40%;">Sub-Indicator</th>
-                        <th style="width: 30%;">Response Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 22 <= (row.qn_no[3:]|int) <= 25 %}
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 19 <= (row.qn_no[3:]|int) <= 23 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -319,7 +300,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 26 %}
+                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 29 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
