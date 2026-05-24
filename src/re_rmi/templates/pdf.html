@@ -159,7 +159,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in governance_data|sort(attribute='qn_no') if row.qn_no.startswith('G.Q') and 1 <= (row.qn_no[3:]|int) <= 7 %}
+                    {% for row in governance_data if row.qn_no.startswith('G.Q') and 1 <= (row.qn_no[3:]|int) <= 7 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -178,7 +178,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in governance_data|sort(attribute='qn_no') if row.qn_no.startswith('G.Q') and 8 <= (row.qn_no[3:]|int) <= 22 %}
+                    {% for row in governance_data if row.qn_no.startswith('G.Q') and 8 <= (row.qn_no[3:]|int) <= 22 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -197,7 +197,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in governance_data|sort(attribute='qn_no') if row.qn_no.startswith('G.Q') and (row.qn_no[3:]|int) >= 23 %}
+                    {% for row in governance_data if row.qn_no.startswith('G.Q') and (row.qn_no[3:]|int) >= 23 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -220,7 +220,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in market_data|sort(attribute='qn_no') %}
+                    {% for row in market_data %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -243,7 +243,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 1 <= (row.qn_no[3:]|int) <= 6 %}
+                    {% for row in perception_data if row.qn_no.startswith('C.Q') and 1 <= (row.qn_no[3:]|int) <= 6 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -262,7 +262,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 18 %}
+                    {% for row in perception_data if row.qn_no.startswith('C.Q') and 7 <= (row.qn_no[3:]|int) <= 18 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -281,7 +281,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and 19 <= (row.qn_no[3:]|int) <= 23 %}
+                    {% for row in perception_data if row.qn_no.startswith('C.Q') and 19 <= (row.qn_no[3:]|int) <= 23 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
@@ -300,7 +300,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in perception_data|sort(attribute='qn_no') if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 29 %}
+                    {% for row in perception_data if row.qn_no.startswith('C.Q') and (row.qn_no[3:]|int) >= 24 %}
                     <tr>
                         <td>{{ row.indicator }}</td>
                         <td>{{ row.subindicator }}</td>
